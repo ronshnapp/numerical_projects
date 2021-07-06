@@ -93,7 +93,7 @@ def plot_Vicsek_fractal_iter_n(n=2):
     return fig, ax
 
 
-n = 6
+n = 4  #(don't go above 6 due to memory consumption..)
 fig, ax = plot_Vicsek_fractal_iter_n(n)
 fig.savefig('im%02d.jpg'%n, dpi=150)
 
