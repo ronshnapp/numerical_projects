@@ -31,7 +31,7 @@ def equation(F, t, L):
     Bx = psdiff(B, period=L)
 
     # Compute du/dt.    
-    dudt = -u*ux + B*Bx + 0.05*uxx
+    dudt = -u*ux + B*Bx + 0.01*uxx
     dBdt = B*ux - B*(1/100.0)
     dFdt = np.append(dudt, dBdt)
 
@@ -49,13 +49,13 @@ def eqn_solution(F0, t, L):
 
 
 if __name__ == '__main__':
-    N = 1024
+    N = 2**10
     L = 50.0
     dx = L/(N-1.0)
     x = np.linspace(0, L-dx, N)
     
-    u0 = np.exp(-((x-L/2)/2)**2 )
-    B0 = 1.0*np.exp(-((x-L/2)/2)**2 )
+    u0 = 1.0 * np.exp(-((x-L/2)/2)**2 )
+    B0 = 0.3 * np.ones(x.shape)
     F0 = np.append(u0, B0)
     
     T = 100.
@@ -85,8 +85,8 @@ if __name__ == '__main__':
     plt.show()
     
     plt.figure(figsize=(6,5))
-    for i in [0,100,200,300,400,499]:
-        plt.plot(u[i,:])
+    for i in [0,15,30,60,125,250,499]:
+        plt.plot(x, u[i,:])
     
 
 
