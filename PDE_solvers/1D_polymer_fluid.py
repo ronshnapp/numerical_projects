@@ -31,8 +31,8 @@ def equation(F, t, L):
     Bx = psdiff(B, period=L)
 
     # Compute du/dt.    
-    dudt = -u*ux + B*Bx + 0.01*uxx
-    dBdt = B*ux - B*(1/100.0)
+    dudt = -u*ux + B*Bx + 0.0001*uxx
+    dBdt = B*ux - B*(1/12.5)
     dFdt = np.append(dudt, dBdt)
 
     return dFdt
@@ -48,17 +48,44 @@ def eqn_solution(F0, t, L):
 
 
 
+def animate(sol, dx, dt, play_speed=10.0):
+    from moviepy.video.io.bindings import mplfig_to_npimage
+    import moviepy.editor as mpy
+    
+    fig, ax = plt.subplots()
+    x_ = np.arange(sol.shape[1])*dx
+    mn, mx = np.amin(sol), np.amax(sol)
+    
+    def mk_frame(t):
+        i = int(t / Nframes * play_speed * (Nframes-1))
+        ax.plot(x_, sol[i,:])
+        ax.set_ylim(mn, mx)
+        ax.text(0.01,0.01, 't=%.2f'%(i*dt), transform=ax.transAxes)
+        img = mplfig_to_npimage(fig)
+        ax.clear()
+        return img
+    
+    Nframes = sol.shape[0]
+    animation = mpy.VideoClip(mk_frame, duration = Nframes/play_speed)
+    
+    animation.write_videofile('test.avi', fps = play_speed, codec='png')
+    plt.close()
+    return animation
+
+
+
+
 if __name__ == '__main__':
-    N = 2**10
-    L = 50.0
+    N = 2**12
+    L = 5.0
     dx = L/(N-1.0)
     x = np.linspace(0, L-dx, N)
     
-    u0 = 1.0 * np.exp(-((x-L/2)/2)**2 )
-    B0 = 0.3 * np.ones(x.shape)
+    u0 = 1.0 * np.exp(-((x-L/2)/0.1)**2 )
+    B0 = 1.0 * np.ones(x.shape)
     F0 = np.append(u0, B0)
     
-    T = 100.
+    T = 2.5
     t = np.linspace(0, T, 500)
     dt = t[1]-t[0]
 
@@ -68,21 +95,21 @@ if __name__ == '__main__':
     
     import matplotlib.pyplot as plt
 
-    plt.figure(figsize=(6,5))
-    plt.imshow(u[::-1, :], extent=[0,L,0,T])
-    plt.colorbar()
-    plt.xlabel('x')
-    plt.ylabel('t')
-    #plt.axis('normal')
-    plt.show()
+    # plt.figure(figsize=(6,5))
+    # plt.imshow(u[::-1, :], extent=[0,L,0,T])
+    # plt.colorbar()
+    # plt.xlabel('x')
+    # plt.ylabel('t')
+    # #plt.axis('normal')
+    # plt.show()
     
     
-    plt.figure(figsize=(6,5))
-    plt.imshow(B[::-1, :], extent=[0,L,0,T])
-    plt.colorbar()
-    plt.xlabel('x')
-    plt.ylabel('t')
-    plt.show()
+    # plt.figure(figsize=(6,5))
+    # plt.imshow(B[::-1, :], extent=[0,L,0,T])
+    # plt.colorbar()
+    # plt.xlabel('x')
+    # plt.ylabel('t')
+    # plt.show()
     
     plt.figure(figsize=(6,5))
     for i in [0,15,30,60,125,250,499]:
