@@ -33,7 +33,7 @@ def equation(F, t, L):
     # Compute du/dt.  
     B0 = -0.05
     U0 = 0.4
-    tau = 2.0  #12.1
+    tau = 1.0  #12.1
     nu = 0.0001   #0.00009
     dudt = -(u+U0)*ux + (B+B0)*Bx + nu*(uxx)
     dBdt = -(u+U0)*Bx + (B+B0)*ux - B*(1/tau)
@@ -157,8 +157,8 @@ if __name__ == '__main__':
     
     
     plt.figure(figsize=(6,5))
-    #plt.imshow(B[::-1, :], extent=[0,L,0,T])
-    plt.imshow(B[::-1, :])
+    plt.imshow(B[::-1, :], extent=[0,L,0,T])
+    #plt.imshow(B[::-1, :])
     plt.colorbar()
     plt.xlabel('x')
     plt.ylabel('t')
@@ -170,28 +170,49 @@ if __name__ == '__main__':
     
 
 
-
-
-
-    fig, ax = plt.subplots(4,1, sharex=True)
-    fig.subplots_adjust(right=0.87, left=0.05, bottom=0.05, top=0.99)
-    e=0
-    vmax = np.amax(np.abs(B))
-    for i in [75,200,325,450]:
-        c = plot_multicolor_line(ax[len(ax)-e-1], x-x0, u[i,:], 
-                             np.abs(B[i,:]), vmax = 0.05, vmin=0.0)
-        
-        ax[e].plot(x-x0, u[0,:], 'k-', lw=.6, alpha=0.5)
-        ax[e].set_ylabel(r'$u_x$')
-        e+=1
-        
-    ax[-1].set_xlabel(r'$x-x_0$')
     
-    cbar_ax = fig.add_axes([0.9, 0.02, 0.0175, 0.82])
-    cbar = fig.colorbar(c, cax=cbar_ax)
-    cbar.set_label(r'$|b_x/B|$')
 
-    fig.savefig('1D_model.pdf')
+    # import matplotlib.pylab as pylab
+    # from matplotlib.legend import Legend
+    
+    # params = {'legend.fontsize': 'x-large',
+    #           'figure.figsize': (6, 4.5),
+    #          'axes.labelsize': 'x-large',
+    #          'axes.titlesize':'x-large',
+    #          'xtick.labelsize':'x-large',
+    #          'ytick.labelsize':'x-large',
+    #          'font.family': ['serif'],
+    #          'font.sans-serif' : 'Computer Modern Roman',
+    #          'grid.color': '#c1c1c1',
+    #          'text.usetex' : 'false',
+    #          'legend.framealpha' : '1.0',
+    #          'lines.markersize': '7.0',
+    #          'lines.markeredgewidth': '0.5',
+    #          'text.usetex':        'true'}
+    # pylab.rcParams.update(params)
+
+
+    # fig, ax = plt.subplots(4,1, sharex=True)
+    # fig.subplots_adjust(right=0.82, left=0.1, bottom=0.12, top=0.99)
+    # e=0
+    # vmax = np.amax(np.abs(B))
+    # for i in [75,200,325,450]:
+    #     c = plot_multicolor_line(ax[len(ax)-e-1], x-x0, u[i,:], 
+    #                          np.abs(B[i,:]), vmax = 0.05, vmin=0.0)
+        
+    #     ax[e].plot(x-x0, u[0,:], 'k-', lw=.6, alpha=0.5)
+    #     ax[e].set_ylabel(r'$u_x$')
+    #     ax[len(ax)-e-1].text(0.85, 0.75, r'$t=%.1f$'%t[i],
+    #                          transform=ax[len(ax)-e-1].transAxes,fontsize=15)
+    #     e+=1
+        
+    # ax[-1].set_xlabel(r'$x-x_0$')
+    
+    # cbar_ax = fig.add_axes([0.87, 0.18, 0.0175, 0.75])
+    # cbar = fig.colorbar(c, cax=cbar_ax)
+    # cbar.set_label(r'$|b_x/B|$')
+
+    #fig.savefig('1D_model.pdf')
     #plt.tight_layout()
 
 
