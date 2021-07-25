@@ -156,13 +156,13 @@ if __name__ == '__main__':
     # plt.show()
     
     
-    plt.figure(figsize=(6,5))
-    #plt.imshow(B[::-1, :], extent=[0,L,0,T])
-    plt.imshow(B[::-1, :])
-    plt.colorbar()
-    plt.xlabel('x')
-    plt.ylabel('t')
-    plt.show()
+    fig, ax = plt.subplots()
+    clr = ax.imshow(B[::-1, :], extent=[0,L,0,T])
+    #plt.imshow(B[::-1, :])
+    fig.colorbar(clr)
+    ax.set_xlabel('x')
+    ax.set_ylabel('t')
+    #fig.savefig('B_0.1.pdf')
     
     #plt.figure(figsize=(6,5))
     #for i in [0,15,30,60,125,250,499]:
@@ -191,9 +191,9 @@ if __name__ == '__main__':
     cbar = fig.colorbar(c, cax=cbar_ax)
     cbar.set_label(r'$|b_x/B|$')
 
-    fig.savefig('1D_model.pdf')
+    #fig.savefig('1D_model.pdf')
     #plt.tight_layout()
-
+    
 
 
 
