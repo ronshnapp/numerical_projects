@@ -1,0 +1,22 @@
+Results from a numerical experiment:
+====================================
+
+
+
+Each run is a repetition of an experimental run with the same parameters.
+
+
+
+run1: v=1 ; dt=1 ; R=0   ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run2: v=1 ; dt=1 ; R=0.1 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run3: v=1 ; dt=1 ; R=0.2 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run4: v=1 ; dt=1 ; R=0.5 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run5: v=1 ; dt=1 ; R=1.0 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run6: v=1 ; dt=1 ; R=2.0 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run7: v=1 ; dt=1 ; R=3.0 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run8: v=1 ; dt=1 ; R=5.0 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run9: v=1 ; dt=1 ; R=7.5 ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run10:v=1 ; dt=1 ; R=10. ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run11:v=1 ; dt=1 ; R=15. ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run12:v=1 ; dt=1 ; R=20. ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
+run13:v=1 ; dt=1 ; R=30. ; M=5dt ; R_initial=0.25 ; N_steps=200 ; N_plankton=100
