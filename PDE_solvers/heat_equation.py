@@ -19,22 +19,39 @@ from scipy.fftpack import diff as psdiff
 
 
 
-def heat_equation(u, t, k, L):
-    '''Returns the RHS of the heat equation'''
+def heat_equation(u, t, k, L, Q):
+    '''Returns the RHS of the heat equation
+    
+    t is time
+    k is the diffusivity
+    L is the length of the domain
+    Q is a source term.
+    '''
+    
     uxx = psdiff(u, period=L, order=2)
-    dudt = k*uxx
+    
+    # add a source term:
+    
+    
+    # add convection:
+    #ux = psdiff(u, period=L)
+    #U = 0.002 * ( (x>L/2) + (x<=L/2)*-1 ) 
+    conv = 0.0 #U*ux
+    
+    dudt = k*uxx + Q - conv
+    
     return dudt
 
 
 
-def heat_equation_solver(u0, t, k, L):
+def heat_equation_solver(u0, t, k, L, Q):
     """Use odeint to solve the heat equation on a periodic domain.
     
     `u0` is initial condition, 
     `t` is the array of time values at which the solution is to be computed, 
     `L` is the length of the periodic domain.
     """
-    sol = odeint(heat_equation, u0, t, args=(k, L), mxstep=5000)
+    sol = odeint(heat_equation, u0, t, args=(k, L, Q), mxstep=5000)
     return sol
     
 
@@ -72,33 +89,43 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     
     # conductivity:
-    k = 0.1
+    k = 1e-5
     
     # spatial grid:
     L = 1.0
-    N = 128
+    N = 2**9
     dx = L / (N-1.0)
     x = np.linspace(0, L-dx, N)
     
+    
     # initial condition
-    u0 = np.exp( -((x-L/2)/0.025)**2 )
-
+    u0 = np.exp( -((x-L/2)/0.025)**2 )*0
+    
+    
+    # a source term:
+    Q = np.exp( -((x-L/2)/ (L/100))**2 ) * 0.00001
+    
     
     # temporal grid
-    T = 1.0
+    T = 100.0
     t = np.linspace(0, T, 500)
     dt = t[1]-t[0]
     
     # compute the solution:
-    sol = heat_equation_solver(u0, t, k, L)
+    sol = heat_equation_solver(u0, t, k, L, Q)
+    
+    #fig, ax = plt.subplots()
+    #c = ax.imshow(sol, extent=[0,L,T,0])
+    #fig.colorbar(c)
+    #ax.set_xlabel('x')
+    #ax.set_ylabel('t')
+    
     
     fig, ax = plt.subplots()
-    c = ax.imshow(sol, extent=[0,L,T,0])
-    fig.colorbar(c)
-    ax.set_xlabel('x')
-    ax.set_ylabel('t')
+    ax.plot(x, Q, 'k-', lw=1)
+    for i in [0,99,199,299,399,499]:
+        ax.plot(x, sol[i,:])
     
-
 
 
 
