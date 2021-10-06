@@ -1,0 +1,2 @@
+Two Long runs of the model.
+Starting from a blob, one run is with interactions, and the other run is without interactions. Then I compare the results in the two runs to analyze the difference that the pair interaction has on the dispersion.
