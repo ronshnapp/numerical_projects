@@ -33,7 +33,7 @@ def equation(F, t, L):
     # Compute du/dt.  
     B0 = -0.05
     U0 = 0.4
-    tau = 1.0  #12.1
+    tau = 2.0  #12.1
     nu = 0.0001   #0.00009
     dudt = -(u+U0)*ux + (B+B0)*Bx + nu*(uxx)
     dBdt = -(u+U0)*Bx + (B+B0)*ux - B*(1/tau)
@@ -198,12 +198,12 @@ if __name__ == '__main__':
     # vmax = np.amax(np.abs(B))
     # for i in [75,200,325,450]:
     #     c = plot_multicolor_line(ax[len(ax)-e-1], x-x0, u[i,:], 
-    #                          np.abs(B[i,:]), vmax = 0.05, vmin=0.0)
+    #                           np.abs(B[i,:]), vmax = 0.05, vmin=0.0)
         
     #     ax[e].plot(x-x0, u[0,:], 'k-', lw=.6, alpha=0.5)
     #     ax[e].set_ylabel(r'$u_x$')
     #     ax[len(ax)-e-1].text(0.85, 0.75, r'$t=%.1f$'%t[i],
-    #                          transform=ax[len(ax)-e-1].transAxes,fontsize=15)
+    #                           transform=ax[len(ax)-e-1].transAxes,fontsize=15)
     #     e+=1
         
     # ax[-1].set_xlabel(r'$x-x_0$')
@@ -212,8 +212,8 @@ if __name__ == '__main__':
     # cbar = fig.colorbar(c, cax=cbar_ax)
     # cbar.set_label(r'$|b_x/B|$')
 
-    #fig.savefig('1D_model.pdf')
-    #plt.tight_layout()
+    # fig.savefig('1D_model.pdf')
+    # plt.tight_layout()
 
 
 
