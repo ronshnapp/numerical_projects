@@ -31,10 +31,10 @@ def equation(F, t, L):
     Bx = psdiff(B, period=L)
 
     # Compute du/dt.  
-    B0 = -0.05
-    U0 = 0.4
-    tau = 2.0  #12.1
-    nu = 0.0001   #0.00009
+    B0 = -200
+    U0 = 500
+    tau = 10.  #12.1
+    nu = 5.0   #0.00009
     dudt = -(u+U0)*ux + (B+B0)*Bx + nu*(uxx)
     dBdt = -(u+U0)*Bx + (B+B0)*ux - B*(1/tau)
     dFdt = np.append(dudt, dBdt)
@@ -122,8 +122,8 @@ if __name__ == '__main__':
     
     # two strong and fast shocks:
     x0 = 0.1
-    d = 0.03
-    u0 = 0.1 * np.exp(-((x-x0)/d)**2 )
+    d = 0.01
+    u0 = 2.2 * np.exp(-((x-x0)/d)**2 )
     B0 = 0.0 * np.ones(x.shape)
     
     #x0 = 0.02
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     #B0 = 0.025 * np.ones(x.shape) #-  0.1 * np.exp(-((x-L/2)/0.005)**2 )
     F0 = np.append(u0, B0)
     
-    T = 2
+    T = 0.001
     t = np.linspace(0, T, 500)
     dt = t[1]-t[0]
 
@@ -156,13 +156,23 @@ if __name__ == '__main__':
     # plt.show()
     
     
-    plt.figure(figsize=(6,5))
-    plt.imshow(B[::-1, :], extent=[0,L,0,T])
-    #plt.imshow(B[::-1, :])
-    plt.colorbar()
-    plt.xlabel('x')
-    plt.ylabel('t')
-    plt.show()
+    #plt.figure(figsize=(6,5))
+    #plt.imshow(u[::-1, :], extent=[0,L,0,T])
+    #plt.colorbar()
+    #plt.xlabel('x')
+    #plt.ylabel('t')
+    #plt.show()
+    
+    ux = np.gradient(u)[1]
+    bx = np.gradient(B)[1]
+    fig, ax = plt.subplots(2,2)
+    for i in [100,200,300,400]:
+        ax[0][0].plot(x, u[i,:])
+        ax[1][0].plot(x, ux[i,:])
+        ax[0][1].plot(x, B[i,:])
+        ax[1][1].plot(x, bx[i,:])
+    for i in range(2): 
+        for j in range(2): ax[i][j].grid()
     
     #plt.figure(figsize=(6,5))
     #for i in [0,15,30,60,125,250,499]:
